@@ -13,6 +13,8 @@ public class UsersService {
 
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private EmailService emailservice;
 	
 	public void register(String name, String email, String pwd) {
 		User user = new User();
@@ -21,6 +23,7 @@ public class UsersService {
 		user.setPwd(pwd);
 		
 		this.userDAO.save(user);
+		this.emailservice.sendConfirmationEmail(user);
 	}
 
 	public void login(String name, String pwd) {
