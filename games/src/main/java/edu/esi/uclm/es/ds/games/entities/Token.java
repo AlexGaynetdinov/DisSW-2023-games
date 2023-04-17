@@ -1,4 +1,4 @@
-package edu.uclm.esi.ds.games.entities;
+package edu.esi.uclm.es.ds.games.entities;
 
 import java.util.UUID;
 

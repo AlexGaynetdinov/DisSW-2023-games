@@ -1,4 +1,4 @@
-package edu.uclm.esi.ds.games.services;
+package edu.esi.uclm.es.ds.games.services;
 
 import java.io.IOException;
 
