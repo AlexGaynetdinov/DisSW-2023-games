@@ -1,3 +1,5 @@
+package edu.esi.uclm.es.ds.games.gameLogic;
+
 import java.security.SecureRandom;
 
 class DiseñoSW_LogicaCeldasValidas {
