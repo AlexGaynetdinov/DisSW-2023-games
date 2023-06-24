@@ -32,6 +32,9 @@ class UsersController {
 		String email = info.get("email").toString();
 		String pwd1 = info.get("pwd1").toString();
 		String pwd2 = info.get("pwd2").toString();
+
+		if (name.contains(" ") || email.contains(" ") || pwd1.contains(" ") || pwd2.contains(" "))
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		
 		if (!pwd1.equals(pwd2))
 			throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Las contraseñas no coinciden");
@@ -48,9 +51,8 @@ class UsersController {
 		String name = info.get("name").toString();
 		String pwd = info.get("pwd").toString();
 
-		if (name.contains(" ") || pwd.contains(" ")) {
+		if (name.contains(" ") || pwd.contains(" "))
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
 
 		try {
 			User user = this.usersService.login(name, pwd);
