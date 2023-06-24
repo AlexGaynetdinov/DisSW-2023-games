@@ -20,12 +20,12 @@ public class Match {
 	private String id;
 	private boolean ready;
 	private List <User> players;
-	private Board board;
+	private byte[][] board;
 
 	public Match() {
 		this.id = UUID.randomUUID().toString();
 		this.players = new ArrayList<>();
-		this.board = new Board();
+		this.board = new byte[7][6];
 	}
 
 	public String getId() {
@@ -59,7 +59,7 @@ public class Match {
 		return this.players.stream().map(User::getName).collect(Collectors.toList());
 	}
 
-	public Board getBoards() {
+	public byte[][] getBoards() {
 		return board;
 	}
 
