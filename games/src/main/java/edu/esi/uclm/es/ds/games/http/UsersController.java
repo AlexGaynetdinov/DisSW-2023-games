@@ -47,7 +47,7 @@ class UsersController {
 	}
 	
 	@PutMapping("/login")
-	public Map<String, Object> login(HttpSession session, HttpServletResponse response, @RequestBody Map<String, Object> info) {
+	public Map<String, Object> login(@RequestBody Map<String, Object> info) {
 		String name = info.get("name").toString();
 		String pwd = info.get("pwd").toString();
 
@@ -56,7 +56,6 @@ class UsersController {
 
 		try {
 			User user = this.usersService.login(name, pwd);
-			session.setAttribute("userId", user.getId());
 			String token = UUID.randomUUID().toString();
 			this.usersService.addUser(token, user);
 			Map<String, Object> alt = new HashMap<>();
