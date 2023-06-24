@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import edu.esi.uclm.es.ds.games.domain.Match;
 import edu.esi.uclm.es.ds.games.domain.WaitingRoom;
+import edu.esi.uclm.es.ds.games.entities.User;
 
 @Service
 public class GamesService {
@@ -19,10 +20,14 @@ public class GamesService {
 		this.matches = new ConcurrentHashMap<>();
 	}
 	
-	public Match requestGame(String juego, String player) {
-		Match match = this.waitingRoom.findMatch(juego, player);
-		if (match.isReady())
+	public Match requestGame(String juego, User user) {
+		Match match = this.waitingRoom.findMatch(juego, user);
+		if (match.isReady()) {
 			this.matches.put(match.getId(), match);
+			// Match start notification
+			match.notifyStart();
+			System.out.println("INICIO DE PARTIDA NOTIFICADO");
+		}
 		return match;
 		//There is an else here
 	}

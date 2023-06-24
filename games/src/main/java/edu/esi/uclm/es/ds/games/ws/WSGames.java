@@ -19,6 +19,11 @@ public class WSGames extends TextWebSocketHandler {
 	@Override // ese websocket representa al navegador
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		this.sessions.add(session);
+		
+		String query = session.getUri().getQuery();
+		String httpSessionId = query.substring("httpSessionId=".length());
+		Manager.get().setWebsocketSession(httpSessionId, session);
+
 	}
 
 	@Override

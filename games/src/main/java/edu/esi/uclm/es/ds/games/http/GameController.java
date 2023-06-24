@@ -9,22 +9,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import edu.esi.uclm.es.ds.games.dao.UserDAO;
 import edu.esi.uclm.es.ds.games.domain.Match;
+import edu.esi.uclm.es.ds.games.entities.User;
 import edu.esi.uclm.es.ds.games.services.GamesService;
 
 @RestController
 @RequestMapping("games")
 @CrossOrigin(origins = "*")
 class GameController {
-	
+	@Autowired
+	UserDAO userDAO;
 	@Autowired
 	private GamesService gamesService;
 	@GetMapping("/requestGame")
 	public Match requestGame(@RequestParam String juego, @RequestParam String player) {
 		if (!juego.equals("nm"))
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se ha encontrado el juego");
-		
-		return this.gamesService.requestGame(juego, player);
+		User user = userDAO.findByName(player);
+		return this.gamesService.requestGame(juego, user);
 		
 	}
 }
