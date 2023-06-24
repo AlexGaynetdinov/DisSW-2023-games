@@ -38,19 +38,26 @@ class UsersController {
 		
 		try {
 			this.usersService.register(name, email, pwd1);
-		}catch(Exception e) {
+		} catch(Exception e) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT);
 		}
 	}
 	
 	@PutMapping("/login")
-	public void login(@RequestBody Map<String, Object> info) {
+	public Map<String, Object> login(HttpSession session, HttpServletResponse response, @RequestBody Map<String, Object> info) {
 		String name = info.get("name").toString();
 		String pwd = info.get("pwd").toString();
-				
+		
 		try {
-			this.usersService.login(name, pwd);
-		}catch(Exception e) {
+			User user = this.usersService.login(name, pwd);
+			session.setAttribute("userId", user.getId());
+			String token = UUID.randomUUID().toString();
+			this.usersService.addUser(token, user);
+			Map<String, Object> alt = new HashMap<>();
+			alt.put("tokenIsmael", token);
+			
+			return alt;
+		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
 	}
