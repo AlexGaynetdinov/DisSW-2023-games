@@ -47,7 +47,11 @@ class UsersController {
 	public Map<String, Object> login(HttpSession session, HttpServletResponse response, @RequestBody Map<String, Object> info) {
 		String name = info.get("name").toString();
 		String pwd = info.get("pwd").toString();
-		
+
+		if (name.contains(" ") || pwd.contains(" ")) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+		}
+
 		try {
 			User user = this.usersService.login(name, pwd);
 			session.setAttribute("userId", user.getId());
