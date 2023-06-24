@@ -17,6 +17,8 @@ public class UsersService {
 	private UserDAO userDAO;
 	@Autowired
 	private EmailService emailservice;
+
+	private HashMap<String, User> users = new HashMap<>();
 	
 	public void register(String name, String email, String pwd) {
 		User user = new User();
