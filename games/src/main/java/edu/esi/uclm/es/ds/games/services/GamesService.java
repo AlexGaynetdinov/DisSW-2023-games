@@ -4,27 +4,31 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 
-import edu.esi.uclm.es.ds.games.domain.Match;
-import edu.esi.uclm.es.ds.games.domain.WaitingRoom;
+import edu.uclm.esi.ds.games.domain.WaitingRoom;
+import edu.uclm.esi.ds.games.domain.Match;
 
 @Service
 public class GamesService {
 
 	private WaitingRoom waitingRoom;
 	private ConcurrentHashMap<String, Match> matches;
-	
+
 	public GamesService() {
-		this.waitingRoom = new WaitingRoom();
-		System.out.println("CREADO EL GAMES SERVICE");
+		System.out.println("***********************\nCREADO EL GAMES SERVICE\n***********************");
 		this.matches = new ConcurrentHashMap<>();
-	}
-	
-	public Match requestGame(String juego, String player) {
-		Match match = this.waitingRoom.findMatch(juego, player);
-		if (match.isReady())
-			this.matches.put(match.getId(), match);
-		return match;
-		//There is an else here
+		this.waitingRoom = new WaitingRoom();
 	}
 
+	public Match request_game(String player) {
+		Match match = this.waitingRoom.findMatch(player);
+		if (match.isReady() || true) {
+			this.matches.put(match.getId(), match);
+		}
+		return match;
+	}
+
+	public Match makeMove(String idMatch, int column, String player) throws Exception{
+		this.matches.get(idMatch).move(column, player);
+		return this.matches.get(idMatch);
+	}
 }
