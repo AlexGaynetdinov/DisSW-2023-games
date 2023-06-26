@@ -9,9 +9,12 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 @Configuration
 @EnableWebSocket
 public class WSConfigurer implements WebSocketConfigurer {
+	@Autowired
+	private GamesService gamesService;
+	
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(new WSGames(), "/wsGames").setAllowedOrigins("*")
+		registry.addHandler(new WSGames(gamesService), "/wsGames").setAllowedOrigins("*")
 				.addInterceptors(new HttpSessionHandshakeInterceptor());
 	}
 }
