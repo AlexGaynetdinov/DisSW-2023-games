@@ -4,32 +4,40 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 
-import edu.esi.uclm.es.ds.games.domain.Match;
-import edu.esi.uclm.es.ds.games.domain.WaitingRoom;
-import edu.esi.uclm.es.ds.games.entities.User;
+import edu.uclm.esi.ds.games.domain.WaitingRoom;
+import edu.uclm.esi.ds.games.domain.Match;
 
 @Service
 public class GamesService {
 
 	private WaitingRoom waitingRoom;
 	private ConcurrentHashMap<String, Match> matches;
-	
+
 	public GamesService() {
-		this.waitingRoom = new WaitingRoom();
-		System.out.println("CREADO EL GAMES SERVICE");
+		System.out.println("***********************\nCREADO EL GAMES SERVICE\n***********************");
 		this.matches = new ConcurrentHashMap<>();
-	}
-	
-	public Match requestGame(String juego, User user) {
-		Match match = this.waitingRoom.findMatch(juego, user);
-		if (match.isReady()) {
-			this.matches.put(match.getId(), match);
-			// Match start notification
-			match.notifyStart();
-			System.out.println("INICIO DE PARTIDA NOTIFICADO");
-		}
-		return match;
-		//There is an else here
+		this.waitingRoom = new WaitingRoom();
 	}
 
+	public Match request_game(String player) {
+		Match match = this.waitingRoom.findMatch(player);
+		if (match.isReady()) {
+			this.matches.put(match.getId(), match);
+		}
+		return match;
+	}
+
+	public Match makeMove(String idMatch, int column, String player) throws Exception{
+		this.matches.get(idMatch).move(column, player);
+		return this.matches.get(idMatch);
+	}
+	
+	// Metodo para sacar el token de un jugador dado el token de su oponente
+	public String getOtherPlayer(String player1, String idMatch) {
+		String player = this.matches.get(idMatch).getPlayers().get(0);
+		if (player == player1)
+			return this.matches.get(idMatch).getPlayers().get(1);
+		else
+			return player;
+	}
 }
