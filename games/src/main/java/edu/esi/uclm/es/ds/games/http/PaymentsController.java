@@ -16,7 +16,7 @@ import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 
-import edu.uclm.esi.ds.games.services.UsersService;
+import edu.esi.uclm.es.ds.games.services.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import edu.uclm.esi.ds.games.domain.User;
-import edu.uclm.esi.ds.games.services.UsersService;
+import edu.esi.uclm.es.ds.games.entities.User;
+import edu.esi.uclm.es.ds.games.services.UsersService;
 import jakarta.servlet.http.HttpSession;
 
 @RestController

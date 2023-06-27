@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import edu.uclm.esi.ds.games.dao.UserDAO;
-import edu.uclm.esi.ds.games.domain.User;
+import edu.esi.uclm.es.ds.games.dao.UserDAO;
+import edu.esi.uclm.es.ds.games.entities.User;
 
 @Service
 public class UsersService {
